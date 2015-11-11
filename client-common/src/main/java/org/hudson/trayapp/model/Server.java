@@ -67,7 +67,8 @@ public class Server {
 	public boolean update() {
 		boolean updated = false;
 		try {
-			boolean hudsonBuild173orGreater = isHudsonBuild173orGreater(true);
+			//boolean hudsonBuild173orGreater = isHudsonBuild173orGreater(true);
+                        boolean hudsonBuild173orGreater = true;
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			URL urlo;
@@ -281,41 +282,41 @@ public class Server {
 	 *
 	 * @return Returns true if the build of Hudson this URL points to is of version 173 or greater. Returns false otherwise.
 	 */
-	public boolean isHudsonBuild173orGreater() { return isHudsonBuild173orGreater(false); }
-	private boolean isHudsonBuild173orGreater(boolean fetchFromServer) {
-
-		if (fetchFromServer) {
-			URL urlo = null;
-			try {
-				 urlo = new URL(getRootHudsonURL(url));
-				 URLConnection conn = urlo.openConnection();
-				 String version = conn.getHeaderField("X-Hudson");
-				 if (version == null) {
-                                    TrayIconImplementation.displayException("Exception on Version Check", "No X-Hudson header. Is "+url+" really Hudson?", new Exception());
-                                     bVersion173OrGreater = false;
-                                     return false;
-                                 }
-                                 Matcher matcher = pattern.matcher(version);
-				 if (matcher.matches()) {
-					 float f = Float.parseFloat(matcher.group(1));
-					 bVersion173OrGreater = f > 1.172;
-					 return bVersion173OrGreater;
-				 } else {
-					 bVersion173OrGreater = false;
-					 return bVersion173OrGreater;
-				 }
-			} catch (MalformedURLException e) {
-				TrayIconImplementation.displayException("Exception on Version Check", "Trying to get Hudson Version", e);
-			} catch (IOException e) {
-				TrayIconImplementation.displayException("Exception on Version Check", "Trying to get Hudson Version", e);
-			}
-			bVersion173OrGreater = false;
-			return false;
-		}
-		else {
-			return bVersion173OrGreater;
-		}
-	}
+	public boolean isHudsonBuild173orGreater() { return true; }
+//	private boolean isHudsonBuild173orGreater(boolean fetchFromServer) {
+//
+//		if (fetchFromServer) {
+//			URL urlo = null;
+//			try {
+//				 urlo = new URL(getRootHudsonURL(url));
+//				 URLConnection conn = urlo.openConnection();
+//				 String version = conn.getHeaderField("X-Hudson");
+//				 if (version == null) {
+//                                    TrayIconImplementation.displayException("Exception on Version Check", "No X-Hudson header. Is "+url+" really Hudson?", new Exception());
+//                                     bVersion173OrGreater = false;
+//                                     return false;
+//                                 }
+//                                 Matcher matcher = pattern.matcher(version);
+//				 if (matcher.matches()) {
+//					 float f = Float.parseFloat(matcher.group(1));
+//					 bVersion173OrGreater = f > 1.172;
+//					 return bVersion173OrGreater;
+//				 } else {
+//					 bVersion173OrGreater = false;
+//					 return bVersion173OrGreater;
+//				 }
+//			} catch (MalformedURLException e) {
+//				TrayIconImplementation.displayException("Exception on Version Check", "Trying to get Hudson Version", e);
+//			} catch (IOException e) {
+//				TrayIconImplementation.displayException("Exception on Version Check", "Trying to get Hudson Version", e);
+//			}
+//			bVersion173OrGreater = false;
+//			return false;
+//		}
+//		else {
+//			return bVersion173OrGreater;
+//		}
+//	}
 
 	private static Pattern pattern = Pattern.compile("([0-9.]+).*");
 
